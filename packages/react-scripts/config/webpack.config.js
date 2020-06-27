@@ -37,7 +37,7 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 const postcssNormalize = require('postcss-normalize');
-
+const FileListPlugin = require('./fileListPlugin');
 const appPackageJson = require(paths.appPackageJson);
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
@@ -149,11 +149,20 @@ module.exports = function (webpackEnv) {
     }
     return loaders;
   };
+  const dependenciesGlobalNames = {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+  };
 
   return {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
+    externals: isEnvProduction
+      ? appPackageJson.microApp.externals.map(dependency => ({
+          [dependency]: dependenciesGlobalNames[dependency],
+        }))
+      : undefined,
     devtool: isEnvProduction
       ? shouldUseSourceMap
         ? 'source-map'
@@ -738,6 +747,7 @@ module.exports = function (webpackEnv) {
           // The formatter is invoked directly in WebpackDevServerUtils during development
           formatter: isEnvProduction ? typescriptFormatter : undefined,
         }),
+      new FileListPlugin(packageJson.microApp.dependencies),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell webpack to provide empty mocks for them so importing them works.
