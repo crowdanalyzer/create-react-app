@@ -24,7 +24,7 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 // We can't use a relative path in HTML because we don't want to load something
 // like /todos/42/static/js/bundle.7289d.js. We have to know the root.
 const publicUrlOrPath = getPublicUrlOrPath(
-  process.env.NODE_ENV === 'development',
+  false, // always return full url and not path only
   require(resolveApp('package.json')).homepage,
   process.env.PUBLIC_URL
 );
@@ -64,7 +64,6 @@ module.exports = {
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
-  appProdIndexJs: resolveModule(resolveApp, 'src/index.prod'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),
