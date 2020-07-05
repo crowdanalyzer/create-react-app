@@ -446,8 +446,8 @@ module.exports = function (webpackEnv) {
                     },
                   ],
                   isEnvDevelopment &&
-                    process.env.ALLOW_CODE_INSTRUMENTATION &
-                      require.resolve('babel-plugin-istanbul'),
+                    process.env.ALLOW_CODE_INSTRUMENTATION &&
+                    require.resolve('babel-plugin-istanbul'),
                   isEnvDevelopment &&
                     shouldUseReactRefresh &&
                     require.resolve('react-refresh/babel'),
