@@ -7,6 +7,7 @@
 'use strict';
 
 const path = require('path');
+console.log('custom one ')
 
 module.exports = {
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',

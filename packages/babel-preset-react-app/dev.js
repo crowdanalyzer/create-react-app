@@ -7,6 +7,7 @@
 'use strict';
 
 const create = require('./create');
+console.log('custom one ')
 
 module.exports = function (api, opts) {
   return create(api, Object.assign({ helpers: false }, opts), 'development');
