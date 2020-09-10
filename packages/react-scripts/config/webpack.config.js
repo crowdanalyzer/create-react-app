@@ -448,6 +448,10 @@ module.exports = function (webpackEnv) {
                       },
                     },
                   ],
+                  require.resolve('babel-plugin-styled-components'),
+                  isEnvDevelopment &&
+                    process.env.ALLOW_CODE_INSTRUMENTATION &&
+                    require.resolve('babel-plugin-istanbul'),
                   isEnvDevelopment &&
                     process.env.ALLOW_CODE_INSTRUMENTATION &&
                     require.resolve('babel-plugin-istanbul'),
